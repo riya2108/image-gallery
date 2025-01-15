@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IMAGE GALLERY riya</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #302e2e;
+            color: #ffffff;
+        }
+
+        h1 {
+            margin: 20px 0;
+            font-size: 2.5em;
+            color: #1cd9f1;
+        }
+
+        .gallery {
+            max-width: 1200px;
+            display: grid;
+            display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 25px;
+            padding: 40px;
+            background-color: #5a4b4b;
+            border-radius: 20px;
+            box-shadow: 0 4px 10px rgba(196, 14, 14, 0.5);
+        }
+
+        .gallery img {
+            /* width: 400%;
+            height: 400%; */
+            margin: 1%;
+            /* padding: 1%; */
+            border-radius: 5px; 
+            cursor: pointer;
+            transition: transform 1.5s ease, box-shadow 1.5s ease;
+            width: 80%;
+  width: 200px; 
+  margin: 2px; 
+        }
+        
+        .gallery img:hover {
+            transform: scale(1.50);
+            box-shadow: 0 5px 8px rgba(237, 24, 24, 0.3);
+        }
+        
+        .lightbox {
+            display: none;
+            position:fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(60, 56, 57, 0.8);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .lightbox img {
+            width: 1000px;
+            height: 600px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(255, 255, 255, 0.3);
+        }
+
+        .lightbox .close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 30px;
+            color: white;
+            cursor: pointer;
+        }
+
+        .lightbox .navigation {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            color: white;
+            font-size: 50px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .lightbox .prev {
+            left: 30px;
+        }
+
+        .lightbox .next {
+            right: 30px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>IMAGE GALLERY BY Riya</h1>
+
+<div class="gallery">
+    <img src="./beautiful-landscape-nature-scenery-1d-3840x2160.jpg" alt="Image 1" data-index="0">
+    <img src="./R.jpg" alt="Image 2" data-index="1">
+    <img src="./download (10).jpg" alt="Image 3" data-index="2">
+    <img src="./OIP (4).jpg" alt="Image 4" data-index="3">
+    <img src="./OIP (5).jpg" alt="Image 5" data-index="4">
+    <img src="./download (7).jpg" alt="Image 6" data-index="5">
+    <img src="./36356.jpg" alt="Image 7" data-index="6">
+    <img src="./OIP (10).jpg" alt="Image 8" data-index="7">
+    <img src="./download (9).jpg" alt="Image 9" data-index="8">
+    <img src="./OIP (5).jpg" alt="Image 10" data-index="9">
+    <img src="./download (3).jpg" alt="Image 11" data-index="10">
+    <img src="./OIP (9).jpg" alt="Image 12" data-index="11">
+    <img src="./R.jpg" alt="Image 13" data-index="12">
+    <img src="./393735.jpg" alt="Image 14" data-index="13">
+    <img src="./download (4).jpg" alt="Image 15" data-index="14">
+    <img src="./OIP (1).jpg" alt="Image 16" data-index="15">
+    <img src="./OIP (11).jpg" alt="Image 17" data-index="16">
+    <img src="./wp2609969.jpg" alt="Image 18" data-index="17">
+    <img src="./OIP (4).jpg" alt="Image 19" data-index="18">
+    <img src="./OIP (6).jpg" alt="Image 20" data-index="19">
+    <img src="./download.jpg" alt="Image 21" data-index="20">
+    <img src="./OIP (2).jpg" alt="Image 22" data-index="21">
+    <img src="./OIP (3).jpg" alt="Image 23" data-index="22">
+    <img src="./OIP (7).jpg" alt="Image 24" data-index="23">
+    <img src="./OIP (5).jpg" alt="Image 25" data-index="24">
+    <img src="./beautiful-landscape-nature-scenery-1d-3840x2160.jpg" alt="Image 26" data-index="25">
+    <img src="./R (1).jpg" alt="Image 27" data-index="26">
+    <img src="./OIP (8).jpg" alt="Image 28" data-index="27">
+    <img src="./download (11).jpg" alt="Image 29" data-index="28">
+    <img src="./OIP (9).jpg" alt="Image 30" data-index="29">
+
+</div>
+
+<div class="lightbox">
+    <span class="close">&times;</span>
+    <span class="navigation prev">&#10094;</span>
+    <img src="" alt="">
+    <span class="navigation next">&#10095;</span>
+</div>
+
+<script>
+    const gallery = document.querySelectorAll('.gallery img');
+    const lightbox = document.querySelector('.lightbox');
+    const lightboxImage = document.querySelector('.lightbox img');
+    const closeBtn = document.querySelector('.lightbox .close');
+    const nextBtn = document.querySelector('.lightbox .next');
+    const prevBtn = document.querySelector('.lightbox .prev');
+
+    let currentIndex = 0;
+
+    const showLightbox = (index) => {
+        currentIndex = index;
+        lightboxImage.src = gallery[index].src;
+        lightbox.style.display = 'flex';
+    };
+
+    const closeLightbox = () => {
+        lightbox.style.display = 'none';
+    };
+
+    const showNextImage = () => {
+        currentIndex = (currentIndex + 1) % gallery.length;
+        showLightbox(currentIndex);
+    };
+
+    const showPrevImage = () => {
+        currentIndex = (currentIndex - 1 + gallery.length) % gallery.length;
+        showLightbox(currentIndex);
+    };
+
+    gallery.forEach((img, index) => {
+        img.addEventListener('click', () => showLightbox(index));
+    });
+
+    closeBtn.addEventListener('click', closeLightbox);
+    nextBtn.addEventListener('click', showNextImage);
+    prevBtn.addEventListener('click', showPrevImage);
+
+    document.addEventListener('keydown', (event) => {
+        if (lightbox.style.display === 'flex') {
+            if (event.key === 'ArrowRight') showNextImage();
+            if (event.key === 'ArrowLeft') showPrevImage();
+            if (event.key === 'Escape') closeLightbox();
+        }
+    });
+</script>
+
+</body>
+</html>
+
